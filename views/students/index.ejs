@@ -1,0 +1,39 @@
+<h2>All Students</h2>
+
+<% if (students.length === 0) { %>
+    <div class="no-data">
+        <p>No students found. <a href="/students/create" class="btn">Add the first student</a></p>
+    </div>
+<% } else { %>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Roll Number</th>
+                <th>Enrollment Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% students.forEach(student => { %>
+                <tr>
+                    <td><%= student.id %></td>
+                    <td><%= student.name %></td>
+                    <td><%= student.email %></td>
+                    <td><%= student.rollNumber %></td>
+                    <td><%= student.enrollmentDate.toISOString().split('T')[0] %></td>
+                    <td>
+                        <a href="/students/<%= student.id %>" class="btn btn-secondary">View</a>
+                        <a href="/students/<%= student.id %>/edit" class="btn btn-secondary">Edit</a>
+                        <form action="/students/<%= student.id %>" method="POST" style="display:inline; margin:0;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
